@@ -1,0 +1,5 @@
+export const AUTH_TYPES = {
+    REGISTERED: "REGISTERED",
+    GUEST: "GUEST",
+    CHECKING: "CHECKING",
+}
