@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { searchPatent } from "../../store/car";
+import { Asd } from "../camera/asd";
 import { Container } from "../shared/ui";
 import { PatentResults } from "./patent-results";
 
@@ -15,7 +16,6 @@ export const PatentsSearch = () => {
   const [patent, setPatent] = useState("");
 
   const onSubmit = (data) => {
-    console.log(data.patent);
     setPatent(data?.patent);
     dispatch(searchPatent(data?.patent));
   };
@@ -70,6 +70,7 @@ export const PatentsSearch = () => {
         </Container>
         {!!patent && <PatentResults />}
       </div>
+      <Asd />
     </>
   );
 };

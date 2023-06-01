@@ -17,8 +17,8 @@ export const PatentResults = () => {
       refetch();
     }
   }, [patent]);
-
-  if (isRefetching) {
+  
+  if (isRefetching || isLoading) {
     return (
       <div className="w-full rounded-lg shadow border md:mt-0 sm:max-w-md xl:p-0 bg-gray-800 border-gray-700">
         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">

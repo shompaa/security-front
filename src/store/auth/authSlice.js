@@ -22,7 +22,7 @@ export const authSlice = createSlice({
       state.name = user.name;
       state.lastName = user.lastName;
       state.role = user.role;
-      state.address = user.address._id;
+      state.address = user.address?.id || '';
       state.status = AUTH_TYPES.REGISTERED;
     },
     logout: (state) => {

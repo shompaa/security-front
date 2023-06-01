@@ -2,6 +2,8 @@ const {
     VITE_API_URL: baseURL,
 } = import.meta.env;
 
+console.log(import.meta.env);
+
 const getEndpoints = (baseURL) => {
     return {
         LOGIN_URL: `${baseURL}/auth/login`,

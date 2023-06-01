@@ -36,7 +36,6 @@ export const searchPatentSlice = createSlice({
   initialState: searchPatentInitialState,
   reducers: {
     searchPatent: (state, { payload }) => {
-      console.log("payload", payload);
       state.patent = payload;
     },
   },

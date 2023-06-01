@@ -12,7 +12,6 @@ const {
 const BYPASSED_URLS = [LOGIN_URL, REGISTER_URL];
 
 const createHttpClient = () => {
-    console.log(store.getState());
     const httpClient = axios.create({
         baseURL: enviroment.baseURL,
         headers: {
