@@ -1,5 +1,5 @@
-import { PatentsSearch } from "../patents/patents-search"
+import { PlateSearch } from "../plate/plate-search";
 
 export const Home = () => {
-  return <PatentsSearch />;
-} 
+  return <PlateSearch />;
+};

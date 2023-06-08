@@ -1,22 +1,22 @@
 import { useEffect, useState } from "react";
-import { usePatentStore } from "../../store";
-import { usePatent } from "./hooks/use-patent";
+import {usePlateStore } from "../../store";
+import { usePlate } from "./hooks/use-plate";
 
-export const PatentResults = () => {
-  const { patent } = usePatentStore();
+export const PlateResults = () => {
+  const { plate } = usePlateStore();
   const [term, setTerm] = useState("");
   const { data, isLoading, refetch, isError, isRefetching, error } =
-    usePatent(patent);
+    usePlate(plate);
 
   useEffect(() => {
-    setTerm(patent);
-  }, [patent]);
+    setTerm(plate);
+  }, [plate]);
 
   useEffect(() => {
-    if (term || patent) {
+    if (term || plate) {
       refetch();
     }
-  }, [patent]);
+  }, [plate]);
   
   if (isRefetching || isLoading) {
     return (
@@ -65,8 +65,8 @@ export const PatentResults = () => {
       <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
         <h5 className="text-xs font-bold leading-tight tracking-tight md:text-sm text-white">
           <p>
-            <span className="font-bold">Patente: </span>
-            {data.patent}
+            <span className="font-bold">platee: </span>
+            {data.plate}
           </p>
           <p>
             <span className="font-bold">Marca: </span>

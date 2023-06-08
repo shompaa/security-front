@@ -1,20 +1,16 @@
-const {
-    VITE_API_URL: baseURL,
-} = import.meta.env;
-
-console.log(import.meta.env);
+const { VITE_API_URL: baseURL } = import.meta.env;
 
 const getEndpoints = (baseURL) => {
-    return {
-        LOGIN_URL: `${baseURL}/auth/login`,
-        REGISTER_URL: `${baseURL}/auth/register`,
-        REFRESH_URL: `${baseURL}/auth/refresh`,
-        PATENTS_URL: (patent) => `${baseURL}/cars/patent/${patent}`,
-    };
-}
+  return {
+    LOGIN_URL: `${baseURL}/auth/login`,
+    REGISTER_URL: `${baseURL}/auth/register`,
+    REFRESH_URL: `${baseURL}/auth/refresh`,
+    PLATES_URL: (plate) => `${baseURL}/cars/plate/${plate}`,
+  };
+};
 
 const ENDPOINTS = getEndpoints(baseURL);
 
 export const enviroment = {
-    ...ENDPOINTS,
+  ...ENDPOINTS,
 };

@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 // const carInitialState = {
 //   id: null,
-//   patent: null,
+//   plate: null,
 //   brand: null,
 //   model: null,
 //   color: null,
@@ -11,8 +11,8 @@ import { createSlice } from "@reduxjs/toolkit";
 //   owner: null,
 // };
 
-const searchPatentInitialState = {
-  patent: null,
+const searchPlateInitialState = {
+  plate: null,
 };
 
 // export const carSlice = createSlice({
@@ -20,7 +20,7 @@ const searchPatentInitialState = {
 //   carInitialState,
 //   reducers: {
 //     getCar: (state, { payload }) => {
-//         state.patent = payload.patent;
+//         state.plate = payload.plate;
 //         state.brand = payload.brand;
 //         state.model = payload.model;
 //         state.color = payload.color;
@@ -31,15 +31,15 @@ const searchPatentInitialState = {
 //   },
 // });
 
-export const searchPatentSlice = createSlice({
-  name: "searchPatent",
-  initialState: searchPatentInitialState,
+export const searchPlateSlice = createSlice({
+  name: "searchPlate",
+  initialState: searchPlateInitialState,
   reducers: {
-    searchPatent: (state, { payload }) => {
-      state.patent = payload;
+    searchPlate: (state, { payload }) => {
+      state.plate = payload;
     },
   },
 });
 
 // export const { getCar } = carSlice.actions;
-export const { searchPatent } = searchPatentSlice.actions;
+export const { searchPlate } = searchPlateSlice.actions;
