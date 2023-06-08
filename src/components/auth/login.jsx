@@ -4,21 +4,29 @@ import { useNavigate } from "react-router-dom";
 import { checkingCredentials, login } from "../../store";
 import { useLogin } from "./hooks/use-login";
 import { validateAuthForm } from "./utils/validations";
+import { Button, FormInput } from "../shared/ui";
+import { useState } from "react";
+import { errorValidation } from "./utils/errors";
 
 export const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { mutateAsync: loginData } = useLogin();
+  const [errorMessage, setErrorMessage] = useState(null);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
   const onSubmit = async (data) => {
-    dispatch(checkingCredentials());
-    const resp = await loginData(data);
-    dispatch(login(resp));
-    navigate("/inicio");
+    try {
+      dispatch(checkingCredentials());
+      const resp = await loginData(data);
+      dispatch(login(resp));
+      navigate("/inicio");
+    } catch ({ response: { status } }) {
+      setErrorMessage(errorValidation[status]);
+    }
   };
   const schema = validateAuthForm();
 
@@ -35,40 +43,39 @@ export const Login = () => {
               onSubmit={handleSubmit(onSubmit)}
             >
               <div>
-                <label
-                  htmlFor="email"
-                  className="block mb-2 text-sm font-medium text-white"
-                >
-                  Correo
-                </label>
-                <input
-                  type="email"
-                  {...register("email", schema.email)}
+                <FormInput
+                  register={register}
+                  schema={schema}
                   name="email"
-                  id="email"
-                  className=" border sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="Correo"
+                  label="Correo"
+                  placeholder="Ingrese correo"
                   required
+                  variant="dark"
                 />
+                {errors.email && (
+                  <p className="text-sm text-red-500">{errors.email.message}</p>
+                )}
               </div>
               <div>
-                <label
-                  htmlFor="password"
-                  className="block mb-2 text-sm font-medium  text-white"
-                >
-                  Contraseña
-                </label>
-                <input
-                  type="password"
-                  {...register("password", schema.password)}
+                <FormInput
+                  register={register}
+                  schema={schema}
                   name="password"
-                  id="password"
-                  placeholder="••••••••"
-                  className=" border m:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500"
+                  label="Contraseña"
+                  placeholder="************"
                   required
+                  variant="dark"
                 />
+                {errors.password && (
+                  <p className="text-sm text-red-500">
+                    {errors.password.message}
+                  </p>
+                )}
               </div>
               <div className="flex items-center justify-between">
+                {errorMessage && (
+                  <p className="text-sm text-red-500">{errorMessage}</p>
+                )}
                 {/* <div className="flex items-start">
                   <div className="flex items-center h-5">
                     <input
@@ -95,14 +102,10 @@ export const Login = () => {
                   Forgot password?
                 </a> */}
               </div>
-              <button
-                type="submit"
-                className={`w-full text-white bg-amber-700 hover:bg-amber-600 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center hover:bg-primary-700 focus:ring-primary-800 ${
-                  false ? "opacity-50 cursor-not-allowed outline-0" : ""
-                }}`}
-              >
-                Sign in
-              </button>
+              <Button variant="secondary" type="submit" fullWidth>
+                Iniciar sesion
+              </Button>
+
               {/* <p className="text-sm font-light  text-gray-400">
                 Don’t have an account yet?{" "}
                 <a
@@ -113,14 +116,6 @@ export const Login = () => {
                 </a>
               </p> */}
               {/* Errors */}
-              {errors.email && (
-                <p className="text-sm text-red-500">{errors.email.message}</p>
-              )}
-              {errors.password && (
-                <p className="text-sm text-red-500">
-                  {errors.password.message}
-                </p>
-              )}
             </form>
           </div>
         </div>
