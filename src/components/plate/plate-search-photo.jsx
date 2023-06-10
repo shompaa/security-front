@@ -1,18 +1,23 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Webcam from "react-webcam";
 import { Button } from "../shared/ui";
 import { useDispatch } from "react-redux";
 import { usePlateByFile } from "./hooks/use-plate-file";
+import { searchPlate } from "../../store/car";
 
 export const PlateSearchByPhoto = () => {
   const [isCameraOn, setIsCameraOn] = useState(false);
   const webcamRef = useRef(null);
   const [selectedImage, setSelectedImage] = useState(null);
   const dispatch = useDispatch();
-  const { mutateAsync: searchPlate } = usePlateByFile();
+  const { mutateAsync: searchPlateMutation } = usePlateByFile();
 
   const agent = navigator.userAgent.toLowerCase();
   const isMobile = /iphone|ipad|ipod|android/.test(agent);
+
+  useEffect(() => {
+    dispatch(searchPlate(null));
+  }, []);
 
   const videoConstraints = {
     facingMode: {
@@ -41,8 +46,8 @@ export const PlateSearchByPhoto = () => {
 
   const handleSubmit = async () => {
     try {
-      const resp = await searchPlate(selectedImage);
-      console.log(resp);
+      const resp = await searchPlateMutation(selectedImage);
+      dispatch(searchPlate(resp));
     } catch (error) {
       console.error(error);
     }
