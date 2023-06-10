@@ -26,7 +26,7 @@ export const Button = React.forwardRef(
       "primary-outlined":
         "bg-transparent text-slate-900 hover:bg-slate-900 hover:text-white focus:bg-slate-100 border-slate-900 border-[1px]",
       secondary:
-        "bg-amber-700 text-white hover:bg-amber-600 focus:bg-amber-600 border-transparent",
+        "bg-amber-600 text-white hover:bg-amber-700 focus:bg-amber-700 border-transparent",
       "secondary-outlined":
         "bg-transparent text-amber-500 hover:bg-amber-100 focus:bg-amber-100 border-amber-500 border-[1px]",
       danger:

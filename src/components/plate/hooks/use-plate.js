@@ -7,6 +7,5 @@ export const usePlate = (plate) => {
   {
     enabled: false,
     retry: false,
-
   });
 };

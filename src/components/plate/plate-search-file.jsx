@@ -1,14 +1,18 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { Button } from "../shared/ui";
+import { usePlateByFile } from "./hooks/use-plate-file";
+import { searchPlate } from "../../store/car";
 
 export const PlateSearchByFile = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [fileName, setFileName] = useState("");
+  const { mutateAsync: searchPlateMutate } = usePlateByFile();
+  const dispatch = useDispatch();
 
   const handleUpload = (event) => {
     const file = event.target.files[0];
-    const fileUrl = URL.createObjectURL(file);
-    setSelectedImage(fileUrl);
+    setSelectedImage(file);
     setFileName(file.name);
   };
 
@@ -19,14 +23,8 @@ export const PlateSearchByFile = () => {
 
   const handleSubmit = async () => {
     try {
-      const formData = new FormData();
-      formData.append("image", selectedImage);
-
-      // const result = await axios.post(endpoint, formData, {
-      //   headers: {
-      //     "Content-Type": "multipart/form-data",
-      //   },
-      // });
+      const resp = await searchPlateMutate(selectedImage);
+      dispatch(searchPlate(resp));
     } catch (error) {
       console.error(error);
     }
@@ -47,7 +45,7 @@ export const PlateSearchByFile = () => {
 
       {selectedImage && (
         <div className="mt-2 gap-y-1">
-          <img src={selectedImage} alt="Selected" />
+          <img src={URL.createObjectURL(selectedImage)} alt="Selected" />
           <Button variant="link-danger" onClick={handleDelete}>
             Eliminar archivo
           </Button>

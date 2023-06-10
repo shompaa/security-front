@@ -1,11 +1,15 @@
 import React, { useState, useRef } from "react";
 import Webcam from "react-webcam";
 import { Button } from "../shared/ui";
+import { useDispatch } from "react-redux";
+import { usePlateByFile } from "./hooks/use-plate-file";
 
 export const PlateSearchByPhoto = () => {
   const [isCameraOn, setIsCameraOn] = useState(false);
   const webcamRef = useRef(null);
   const [selectedImage, setSelectedImage] = useState(null);
+  const dispatch = useDispatch();
+  const { mutateAsync: searchPlate } = usePlateByFile();
 
   const agent = navigator.userAgent.toLowerCase();
   const isMobile = /iphone|ipad|ipod|android/.test(agent);
@@ -17,8 +21,14 @@ export const PlateSearchByPhoto = () => {
   };
 
   const capture = () => {
-    const image = webcamRef.current.getScreenshot();
-    setSelectedImage(image);
+    const imageSrc = webcamRef.current.getScreenshot();
+    const imageBlob = dataURLtoBlob(imageSrc);
+
+    const file = new File([imageBlob], "image.jpg", {
+      type: "image/jpeg",
+    });
+
+    setSelectedImage(file);
   };
 
   const handleCameraToggle = () => {
@@ -31,20 +41,23 @@ export const PlateSearchByPhoto = () => {
 
   const handleSubmit = async () => {
     try {
-      const formData = new FormData();
-      formData.append("image", selectedImage);
-
-      // const result = await axios.post(endpoint, formData, {
-      //   headers: {
-      //     "Content-Type": "multipart/form-data",
-      //   },
-      // });
-
-      console.log(selectedImage);
-      console.log(formData.get("image"));
+      const resp = await searchPlate(selectedImage);
+      console.log(resp);
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const dataURLtoBlob = (dataurl) => {
+    let arr = dataurl.split(","),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], { type: mime });
   };
 
   return (
@@ -78,7 +91,7 @@ export const PlateSearchByPhoto = () => {
 
       {selectedImage && (
         <div className="mt-2">
-          <img src={selectedImage} alt="Selected" />
+          <img src={URL.createObjectURL(selectedImage)} alt="Selected" />
           <Button variant="link-danger" onClick={handleDelete}>
             Eliminar foto
           </Button>

@@ -60,6 +60,7 @@ export const Login = () => {
                 <FormInput
                   register={register}
                   schema={schema}
+                  type="password"
                   name="password"
                   label="Contraseña"
                   placeholder="************"
@@ -74,7 +75,12 @@ export const Login = () => {
               </div>
               <div className="flex items-center justify-between">
                 {errorMessage && (
-                  <p className="text-sm text-red-500">{errorMessage}</p>
+                  <div
+                    class="p-2 w-full text-center text-sm text-red-800 rounded-lg bg-red-300"
+                    role="alert"
+                  >
+                    {errorMessage}
+                  </div>
                 )}
                 {/* <div className="flex items-start">
                   <div className="flex items-center h-5">

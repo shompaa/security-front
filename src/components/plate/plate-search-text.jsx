@@ -12,6 +12,7 @@ export const PlateSearchByText = () => {
   } = useForm();
 
   const onSubmit = (data) => {
+    console.log(data);
     dispatch(searchPlate(data?.plate));
   };
 
@@ -27,7 +28,7 @@ export const PlateSearchByText = () => {
   };
 
   return (
-    <form onSubmit={onSubmit} className="space-y-4 md:space-y-6">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 md:space-y-6">
       <div>
         <input
           type="text"

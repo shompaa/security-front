@@ -1,9 +1,9 @@
 const inputClass = {
-  amber:
+  secondary:
     "bg-amber-700 text-white hover:bg-amber-600 focus:bg-amber-600 border-transparent",
-  white:
+  primary:
     "bg-slate-100 text-white hover:bg-slate-200 focus:bg-slate-200 border-transparent",
-  default:
+  dark:
     "border sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 bg-gray-700 border-gray-600 placeholder-gray-400 text-white focus:ring-blue-500 focus:border-blue-500",
 };
 
@@ -20,7 +20,7 @@ const FormInput = ({
 }) => {
   const getInputClass = () => {
     const className = inputClass[variant];
-    return className || inputClass.default;
+    return className || inputClass.primary;
   };
 
   return (

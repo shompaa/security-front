@@ -6,6 +6,7 @@ const getEndpoints = (baseURL) => {
     REGISTER_URL: `${baseURL}/auth/register`,
     REFRESH_URL: `${baseURL}/auth/refresh`,
     PLATES_URL: (plate) => `${baseURL}/cars/plate/${plate}`,
+    PLATES_FILES_URL: `${baseURL}/images/detect`,
   };
 };
 

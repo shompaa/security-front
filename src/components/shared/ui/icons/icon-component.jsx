@@ -4,9 +4,6 @@ import * as IconsIndex from "./svg-icon";
 export const Icon = forwardRef(
   ({ icon, width = 4, height = 4, variant, iconActive }, ref) => {
     const IconToRender = IconsIndex[icon];
-
-    console.log({ variant });
-
     const createIconColor = () => {
       const colors = {
         "primary-outlined": iconActive
