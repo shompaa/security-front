@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch } from "react-redux";
 import { Button } from "../shared/ui";
 import { usePlateByFile } from "./hooks/use-plate-file";
@@ -9,16 +9,25 @@ export const PlateSearchByFile = () => {
   const [fileName, setFileName] = useState("");
   const { mutateAsync: searchPlateMutate } = usePlateByFile();
   const dispatch = useDispatch();
+  const inputRef = useRef();
+
+  useEffect(() => {
+    dispatch(searchPlate(null));
+  }, []);
 
   const handleUpload = (event) => {
     const file = event.target.files[0];
     setSelectedImage(file);
     setFileName(file.name);
+    event.target.value = null;
   };
 
   const handleDelete = () => {
     setSelectedImage(null);
     setFileName("");
+    if (inputRef.current) {
+      inputRef.current.value = null;
+    }
   };
 
   const handleSubmit = async () => {
@@ -34,12 +43,13 @@ export const PlateSearchByFile = () => {
     <>
       <div className="relative inline-flex gap-x-1">
         <input
+          ref={inputRef}
           type="file"
           accept="image/*"
           className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
           onChange={handleUpload}
         />
-        <Button variant="link">Seleccionar archivo</Button>
+        <Button variant="primary-outlined">Seleccionar archivo</Button>
         <p>{fileName}</p>
       </div>
 

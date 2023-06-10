@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { searchPlate } from "../../store/car";
 import { Button } from "../shared/ui";
+import { useEffect } from "react";
 
 export const PlateSearchByText = () => {
   const dispatch = useDispatch();
@@ -10,6 +11,10 @@ export const PlateSearchByText = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  useEffect(() => {
+    dispatch(searchPlate(null));
+  }, []);
 
   const onSubmit = (data) => {
     console.log(data);
